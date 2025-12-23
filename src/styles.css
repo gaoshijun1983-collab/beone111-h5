@@ -1,509 +1,325 @@
 /* Reset & Base */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-html, body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: #222; /* Dark desk background */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  background-color: #000;
 }
 
-/* Mobile Simulation Container */
-#app-container {
-    width: 100%;
-    /* On Desktop: Simulate Mobile */
-    max-width: 440px; 
-    max-height: 920px; 
-    aspect-ratio: 9 / 18; 
-    
-    position: relative;
-    background-color: #000;
-    overflow: hidden;
-    box-shadow: 0 0 30px rgba(0,0,0,0.8);
-    border: 12px solid #111; 
-    border-radius: 35px;
-    margin: auto; 
+#app {
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 
-/* Real Mobile Adaptation */
-@media screen and (max-width: 480px) {
-    html, body {
-        background-color: #000; /* No dark desk bg on real mobile */
-        display: block;
-    }
-    
-    #app-container {
-        max-width: 100%;
-        max-height: 100%;
-        width: 100%;
-        height: 100%;
-        border: none;
-        border-radius: 0;
-        box-shadow: none;
-        aspect-ratio: unset; /* Let it fill screen */
-    }
+@media only screen and (min-width: 768px) {
+  #app {
+    max-width: 500px;
+    margin: 0 auto;
+    border-left: 1px solid #333;
+    border-right: 1px solid #333;
+  }
 }
 
-/* ... Phase Styles remain ... */
-
-
-
-/* Transparent Inputs aligned to Background slots */
-.transparent-input {
-    position: absolute;
-    background: transparent;
-    border: none;
-    outline: none;
-    font-size: 16px; 
-    color: #333;
-    padding-left: 0px; 
-    line-height: normal; 
-}
-
-/* CSS-based Input Group Styling */
-/* CSS-based Input Group Styling */
-/* CSS-based Input Group Styling */
-.form-container-absolute {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    /* Removed Flexbox to allow manual absolute positioning */
-}
-
-.input-group {
-    background: #ffffff;  /* Solid white to block background text */
-    border-radius: 12px; 
-    padding: 8px 15px; 
-    display: flex;
-    align-items: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    height: 46px; 
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    
-    position: absolute; /* Back to manual absolute */
-    /* Width restored to 80% to match wish buttons */
-    width: 80%;
-    left: 10%;
-    pointer-events: auto;
-    cursor: text; 
-}
-
-/* Initial estimates based on previous 39.3% start + gaps */
-.group-job { top: 38%; }
-.group-name { top: 46%; }
-.wish-buttons-container {
-    position: absolute;
-    top: 54%;
-    left: 10%;
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    gap: 15px; /* Slightly more gap for clarity */
-    pointer-events: auto;
-}
-
-.wish-button {
-    width: 100%;
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Button Container Adjustments */
-.wish-button, .submit-area {
-    position: relative;
-    border-radius: 15px; 
-}
-
-/* Glowing Stroke Animation (Intensified) */
-@keyframes breathingGlow {
-    0% { filter: drop-shadow(0 0 8px rgba(0, 136, 204, 0.4)); transform: scale(1); }
-    50% { filter: drop-shadow(0 0 20px rgba(0, 136, 204, 0.9)); transform: scale(1.02); }
-    100% { filter: drop-shadow(0 0 8px rgba(0, 136, 204, 0.4)); transform: scale(1); }
-}
-
-@keyframes breathingGlowGold {
-    0% { filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4)); transform: scale(1); }
-    50% { filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.9)); transform: scale(1.02); }
-    100% { filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4)); transform: scale(1); }
-}
-
-.wish-button {
-    animation: breathingGlow 3s infinite ease-in-out;
-    background: none;
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    cursor: pointer;
-}
-
-.wish-button img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 12px;
-    transition: all 0.3s ease;
-}
-
-#submit-btn {
-    width: 100%;
-    height: auto;
-    display: block;
-    cursor: pointer;
-    animation: breathingGlowGold 3s infinite ease-in-out;
-}
-
-.wish-button.selected img {
-    background: #ffffff;
-    border-radius: 18px;
-    padding: 8px;
-    filter: drop-shadow(0 0 15px rgba(0, 136, 204, 0.6)) !important;
-    transform: scale(1.05) !important;
-    animation: none;
-}
-/* ... */
-/* Submit Button Area adjustment */
-.submit-area {
-    position: absolute; /* Manual positioning */
-    top: 70%;
-    left: 10%;
-    width: 80%;
-    display: flex;
-    justify-content: center;
-    pointer-events: auto;
-    z-index: 50; /* Ensure it is clickable over any layers */
-    cursor: pointer;
-}
-
-.input-label {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    color: #0088cc; 
-    font-weight: bold;
-    margin-right: 15px;
-    min-width: 50px; 
-    white-space: nowrap; /* Prevent ugly line breaks */
-    pointer-events: none;
-}
-
-/* Phase Management */
 .phase {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    transition: opacity 0.5s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.5s ease;
 }
 
 .phase.active {
-    opacity: 1;
-    z-index: 10;
-    pointer-events: auto;
+  opacity: 1;
+  z-index: 10;
+  pointer-events: auto;
 }
-
 .phase.hidden {
-    opacity: 0;
-    z-index: 0;
-    pointer-events: none;
+  opacity: 0;
+  z-index: 0;
+  pointer-events: none;
 }
 
 /* Video Phase */
 #video-phase {
-    background-color: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
 #opening-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-/* Play Button Overlay */
-.play-btn-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80px;
-    height: 80px;
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 20;
-    pointer-events: none; /* Click falls through to container usually, but we might want this clickable */
+#play-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  z-index: 20;
+  cursor: pointer;
 }
 
-/* Triangle */
-.play-btn-overlay::after {
-    content: '';
-    display: block;
-    width: 0;
-    height: 0;
-    border-top: 15px solid transparent;
-    border-bottom: 15px solid transparent;
-    border-left: 25px solid white;
-    margin-left: 5px; /* Visual center adjustment */
+.play-btn {
+  width: 80px;
+  height: 80px;
+  background: rgba(0, 136, 204, 0.6);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 15px;
+  backdrop-filter: blur(5px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 20px rgba(0, 136, 204, 0.4);
+  transition: all 0.3s ease;
 }
 
-#video-phase:hover .play-btn-overlay {
-    background: rgba(0, 0, 0, 0.6);
-    transform: translate(-50%, -50%) scale(1.1);
+.play-icon {
+  width: 0;
+  height: 0;
+  border-top: 15px solid transparent;
+  border-left: 25px solid white;
+  border-bottom: 15px solid transparent;
+  margin-left: 8px;
 }
 
-.hide-on-play {
-    transition: opacity 0.5s;
+#play-overlay:hover .play-btn {
+  transform: scale(1.1);
+  background: rgba(0, 136, 204, 0.8);
 }
 
 /* Form Phase */
 #form-phase {
-    background: #1a1a1a url('assets/Wishbg.png') no-repeat center top;
-    background-size: 100% 100%;
+  background: #1a1a1a url("src/assets/Wishbg.png") no-repeat center top;
+  background-size: 100% 100%;
 }
 
-/* Logos */
 .logo {
-    position: absolute;
-    width: 25vw; 
-    max-width: 110px;
-    height: auto;
-    z-index: 25; /* Higher than updated overlays */
+  position: absolute;
+  width: 25vw;
+  max-width: 110px;
+  height: auto;
+  z-index: 25;
 }
-
 .top-left {
-    top: 30px;
-    left: 20px;
+  top: 30px;
+  left: 20px;
 }
-
 .top-right {
-    top: 35px;
-    right: 20px;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));
+  top: 35px;
+  right: 20px;
 }
 
-/* Form Container Absolute Positioning */
-/* Form Container styling is already defined above at line 73 */
-
-#wish-form {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    pointer-events: auto;
+/* Input Groups */
+.input-group {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  height: 46px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  width: 80%;
+  left: 10%;
+  pointer-events: auto;
 }
 
-/* Word Art Asset */
-.word-art-asset {
-    position: absolute;
-    top: 25%; /* Above inputs */
-    left: 10%;
-    width: 80%;
-    height: auto;
-    /* Blend mode might be needed if it has black bg */
-    border-radius: 10px;
+.group-job {
+  top: 38%;
+}
+.group-name {
+  top: 46%;
 }
 
-/* Real Input Styling - FORCE OVERRIDE */
-#username, #userphone {
-    border: 0 !important;
-    background: transparent !important;
-    outline: none !important;
-    box-shadow: none !important;
-    appearance: none !important;
-    -webkit-appearance: none !important;
-    border-radius: 0 !important;
-
-    font-size: 16px;
-    color: #333;
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-    display: block;
+.input-label {
+  font-size: 16px;
+  color: #0088cc;
+  font-weight: bold;
+  margin-right: 15px;
+  min-width: 45px;
+  white-space: nowrap;
 }
 
-#message {
-    /* padding-top removed to align with label */
-    line-height: 1.5;
-    resize: none;
-}
-
-/* Transparent Inputs aligned to Background slots */
 .transparent-input {
-    position: absolute;
-    background: transparent;
-    border: none;
-    outline: none;
-    font-size: 16px;
-    color: #333;
-    padding-left: 0px;
-    line-height: normal;
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  color: #333;
 }
 
-/* Stale classes removed to prevent conflicts with .input-group */
+/* Wish Buttons */
+.wish-buttons-container {
+  position: absolute;
+  top: 54%;
+  left: 10%;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  pointer-events: auto;
+}
 
-/* Submit Button Area */
+.wish-button {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-radius: 15px;
+}
+
+.wish-button img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+/* Intensified Breathing Glow */
+@keyframes breathingGlow {
+  0% {
+    filter: drop-shadow(0 0 8px rgba(0, 136, 204, 0.4));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 20px rgba(0, 136, 204, 0.9));
+    transform: scale(1.02);
+  }
+  100% {
+    filter: drop-shadow(0 0 8px rgba(0, 136, 204, 0.4));
+    transform: scale(1);
+  }
+}
+
+@keyframes breathingGlowGold {
+  0% {
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.9));
+    transform: scale(1.02);
+  }
+  100% {
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4));
+    transform: scale(1);
+  }
+}
+
+.wish-button {
+  animation: breathingGlow 3s infinite ease-in-out;
+}
+
+.wish-button.selected img {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 8px;
+  filter: drop-shadow(0 0 15px rgba(0, 136, 204, 0.6)) !important;
+  transform: scale(1.05) !important;
+  animation: none;
+}
+
+/* Submit Area */
 .submit-area {
-    position: absolute;
-    top: 86%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60%;
-    display: flex;
-    justify-content: center;
-    pointer-events: auto;
+  position: absolute;
+  top: 86%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  pointer-events: auto;
 }
 
 #submit-btn {
-    width: 100%;
-    height: auto;
-    display: block;
-    cursor: pointer;
-    transition: transform 0.2s ease;
+  width: 100%;
+  height: auto;
+  display: block;
+  cursor: pointer;
+  animation: breathingGlowGold 3s infinite ease-in-out;
 }
 
-#submit-btn:active {
-    transform: scale(0.95);
-}
-
-/* Full-screen Success Modal */
+/* Success Modal */
 .toast {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('assets/full_success_bg.png');
-    background-size: cover;
-    background-position: center;
-    color: #ffffff;
-    padding: 0;
-    z-index: 5000; /* Over everything */
-    opacity: 0;
-    pointer-events: none;
-    text-align: center;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end; /* Text at bottom */
-    transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-}
-
-.toast-content {
-    padding: 0 40px 15vh; /* Responsive bottom spacing */
-    width: 100%;
-    background: linear-gradient(to top, rgba(0,0,0,0.5), transparent); /* Shadow for text readability */
-}
-
-.toast-title {
-    font-size: 28px;
-    font-weight: 800;
-    margin-bottom: 12px;
-    letter-spacing: 2px;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-}
-
-.toast-message {
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 1.6;
-    opacity: 0.9;
-    text-shadow: 0 1px 5px rgba(0,0,0,0.3);
-}
-
-/* Remove old style success header */
-.toast::before {
-    display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("src/assets/full_success_bg.png");
+  background-size: cover;
+  background-position: center;
+  color: #ffffff;
+  padding: 0;
+  z-index: 5000;
+  opacity: 0;
+  pointer-events: none;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .toast.show {
-    opacity: 1;
-    pointer-events: auto;
+  opacity: 1;
+  pointer-events: auto;
 }
 
+.toast-content {
+  padding: 0 40px 15vh;
+  width: 100%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+}
 
+.toast-title {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+.toast-message {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.6;
+  opacity: 0.9;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+}
 
-/* Admin Features */
 #admin-trigger {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 50px;
-    height: 50px;
-    z-index: 99;
-    /* Transparent trigger */
-}
-
-.admin-modal {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.9);
-    z-index: 200;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-}
-
-.admin-modal.hidden {
-    display: none;
-}
-
-.admin-content {
-    background: #333;
-    padding: 20px;
-    border-radius: 10px;
-    width: 90%;
-    max-height: 80%;
-    overflow-y: auto;
-    text-align: center;
-}
-
-.admin-actions button {
-    margin: 10px;
-    padding: 8px 16px;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-#data-preview {
-    margin-top: 20px;
-    font-size: 12px;
-    text-align: left;
-    white-space: pre-wrap;
-    max-height: 200px;
-    overflow-y: auto;
-    border: 1px solid #555;
-    padding: 5px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  z-index: 100;
+  cursor: default;
 }

@@ -1,0 +1,21 @@
+{
+  "name": "beone111-h5",
+  "version": "1.0.0",
+  "description": "本项目为 H5 活动页面，包含视频播放、表单提交（工号、姓名、寄语）以及本地 `localStorage` 数据保存。以下文档说明如何在服务器端接入后端 API，实现数据上报、统计展示和 CSV 导出功能，并提供部署与测试要点。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gaoshijun1983-collab/beone111-h5.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/gaoshijun1983-collab/beone111-h5/issues"
+  },
+  "homepage": "https://github.com/gaoshijun1983-collab/beone111-h5#readme"
+}
