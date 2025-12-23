@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>H5 Event Page</title>
+    <link rel="stylesheet" href="src/styles.css" />
+  </head>
+  <body>
+    <div id="app-container">
+
+        <!-- Video Phase -->
+        <div id="video-phase" class="phase active">
+            <!-- Logos visible initially (static state) -->
+            <img src="src/assets/Brand.png" alt="Brand Logo" class="logo top-left hide-on-play active-on-start">
+            <img src="src/assets/top_right_logo.png" alt="Top Right Logo" class="logo top-right hide-on-play active-on-start">
+
+            <video id="opening-video" playsinline webkit-playsinline>
+                <source src="src/assets/OpeningVideo.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            
+            <div id="play-btn-overlay" class="play-btn-overlay hide-on-play"></div>
+        </div>
+
+        <!-- Form Phase -->
+        <div id="form-phase" class="phase hidden">
+            
+            <div class="form-container-absolute">
+                <form id="wish-form">
+                    <!-- Field 1: Name (formerly Job ID) -->
+                    <div class="input-group group-job">
+                        <div class="input-label">
+                            <span>姓名</span>
+                        </div>
+                        <input type="text" id="username" required>
+                    </div>
+
+                    <!-- Field 2: Phone (formerly Name) -->
+                    <div class="input-group group-name">
+                        <div class="input-label">
+                            <span>电话</span>
+                        </div>
+                        <input type="tel" id="userphone" required>
+                    </div>
+
+                    <!-- Field 3: Wish Buttons (formerly Message) -->
+                    <div class="wish-buttons-container">
+                        <div class="wish-button" data-wish="心愿达成-万事通达，新年快乐">
+                            <img src="src/assets/wish_1.png" alt="Wish 1">
+                        </div>
+                        <div class="wish-button" data-wish="健康必达-兼济天下，健康速达">
+                            <img src="src/assets/wish_2.png" alt="Wish 2">
+                        </div>
+                        <div class="wish-button" data-wish="达济天下-悦启新章，必达长虹">
+                            <img src="src/assets/wish_3.png" alt="Wish 3">
+                        </div>
+                        <input type="hidden" id="selected-wish" required>
+                    </div>
+
+                    <div class="submit-area">
+                        <img src="src/assets/button.png" id="submit-btn" alt="Submit">
+                    </div>
+                </form>
+            </div>
+            
+             <!-- Admin Trigger (Secret: Long press top right logo or just double click brand?) 
+                 Let's make it a hidden button or just triggered via console/url for now, 
+                 but user asked for "function", so a secret UI trigger is best. 
+                 Let's add a hidden button in bottom left. -->
+            <div id="admin-trigger"></div>
+        </div>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast">提交成功！</div>
+
+        <!-- Admin Stats Modal -->
+        <div id="admin-modal" class="admin-modal hidden">
+            <div class="admin-content">
+                <h3>后台数据统计</h3>
+                <p>总收集数: <span id="total-count">0</span></p>
+                <div class="admin-actions">
+                    <button id="download-btn">导出 CSV</button>
+                    <button id="close-admin">关闭</button>
+                </div>
+                <div id="data-preview"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="src/script.js"></script>
+  </body>
+</html>
