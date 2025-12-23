@@ -35,6 +35,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Handle image-based submit button
+    document.getElementById('submit-btn').addEventListener('click', () => {
+        wishForm.requestSubmit(); // Better than .submit() as it triggers validation
+    });
+
     wishForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
