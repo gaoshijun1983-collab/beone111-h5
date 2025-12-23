@@ -1,109 +1,66 @@
-# BEONE H5 活动页 – 服务器集成指南（中文）
+# BeOne 111-H5 活动页面项目全描述
 
-## 概述
-本项目为 H5 活动页面，包含视频播放、表单提交（工号、姓名、寄语）以及本地 `localStorage` 数据保存。以下文档说明如何在服务器端接入后端 API，实现数据上报、统计展示和 CSV 导出功能，并提供部署与测试要点。
-
-## 1. 项目结构
-```
-BEONE H5/
-├─ index.html                # 主页面
-├─ src/
-│   ├─ styles.css           # 样式文件
-│   ├─ script.js            # 前端逻辑
-│   └─ layout_helper.js     # 调试辅助（生产环境删除）
-├─ assets/                  # 视频、图片等资源
-└─ README.md                # 本说明文档（中文）
-```
-
-## 2. 后端 API 规范
-建议使用轻量级的 RESTful 接口（Node.js/Express、Flask、Spring Boot 等），提供以下四个端点：
-
-| 方法 | URL | 请求体 | 返回示例 |
-|------|-----|--------|----------|
-| `POST` | `/api/submit` | `{ "jobid": "string", "name": "string", "message": "string" }` | `{ "success": true, "id": "<record_id>" }` |
-| `GET`  | `/api/submissions` | — | `{ "submissions": [{ "id": "...", "jobid": "...", "name": "...", "message": "...", "timestamp": "ISO8601" }] }` |
-| `GET`  | `/api/stats` | — | `{ "total": 123, "lastSubmission": "2025-12-16T22:00:00Z" }` |
-| `GET`  | `/api/export` | — | CSV 文件（UTF‑8 BOM）下载 |
-
-### 2.1 数据模型
-```json
-{
-  "id": "uuid",
-  "jobid": "string",
-  "name": "string",
-  "message": "string",
-  "timestamp": "ISO8601"
-}
-```
-可使用 SQLite、MongoDB 或简单的 JSON 文件持久化。
-
-## 3. 前端代码改动（src/script.js）
-1. 删除本地保存函数 `saveData`，改为 `fetch` 调用后端 `/api/submit`。
-2. 成功提交后显示统一提示（如 “我们相约 1 月 5 日”），并清空表单。
-3. 错误处理：网络错误或后端返回 `success:false` 时弹出相应提示。
-
-### 示例代码
-```javascript
-function submitForm(e) {
-  e.preventDefault();
-  const payload = {
-    jobid: document.getElementById('jobid').value.trim(),
-    name: document.getElementById('username').value.trim(),
-    message: document.getElementById('message').value.trim()
-  };
-  fetch('/api/submit', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  })
-    .then(r => r.json())
-    .then(data => {
-      if (data.success) {
-        showToast('我们相约 1 月 5 日');
-        wishForm.reset();
-      } else {
-        showToast('提交失败，请重试');
-      }
-    })
-    .catch(() => showToast('网络错误'));
-}
-
-wishForm.addEventListener('submit', submitForm);
-```
-将上述代码替换原有的 `wishForm.addEventListener('submit', …)` 逻辑即可。
-
-## 4. 统计与后台管理界面
-原有的管理员弹窗读取 `localStorage`，改为从 `/api/submissions` 拉取数据并展示。
-
-### 前端实现示例
-```javascript
-fetch('/api/submissions')
-  .then(r => r.json())
-  .then(data => {
-    const submissions = data.submissions;
-    totalCount.textContent = submissions.length;
-    dataPreview.innerHTML = submissions.slice(-5)
-      .map(s => `[${s.jobid}] ${s.name}: ${s.message.substring(0,10)}...`)
-      .join('<br>');
-  });
-```
-在管理员弹窗中新增 **“导出 CSV”** 按钮，点击后访问 `/api/export` 即可下载全部记录。
-
-## 5. 部署检查清单
-- **静态资源**：确保服务器能够正确提供 `index.html`、`src/`、`assets/` 目录下的文件。
-- **跨域**：若前端与 API 不在同一域名，需要在后端开启 CORS，允许前端来源。
-- **HTTPS**：涉及个人信息时务必使用 HTTPS，防止数据泄露。
-- **无需构建**：本项目使用原生 HTML/CSS/JS，无需额外打包步骤。
-- **功能测试**：
-  1. 视频播放 → 表单出现。
-  2. 表单提交 → 服务器成功返回。
-  3. 打开后台弹窗 → 正确显示统计数据和最近 5 条记录。
-  4. 点击 “导出 CSV” → 下载文件并检查内容。
-
-## 6. 后续可选功能
-- **鉴权**：为后台接口添加简单 token 鉴权，防止未授权访问。
-- **限流**：对提交接口做频率限制，防止刷单。
-- **服务器端校验**：在后端再次校验 `jobid`、`name`、`message` 的合法性。
-- **埋点统计**：记录视频播放、表单打开等行为，便于运营分析。
+## 1. 项目概述
+本项目是一款专为移动端设计的 H5 活动页面，集成了沉浸式视频开场、精美表单交互以及 Node.js 后端数据收集与统计导出功能。整体设计追求高端质感（Premium Design），旨在为用户提供极致的交互体验。
 
 ---
+
+## 2. 核心功能
+### 2.1 极致视觉与动效 (Premium Design)
+- **沉浸式 3D 成功海报**：提交表单后，展示 9:16 全屏 3D 视觉画面，采用磨砂玻璃材质背景，配合弧形底部遮罩，营造高端仪式感。
+- **动态呼吸按钮 (Breathing Glow)**：
+    - **寄语按钮**：具有青色（Cyan）呼吸光效，选中后变为**白底 pill 形状**，视觉反馈清晰且富有品质感。
+    - **提交按钮**：具有金色（Gold）循环呼吸光效，平衡整体页面的视觉重心。
+- **精准布局对齐**：所有输入框与寄语按钮均采用 80% 宽度居中对齐，确保在各种手机屏幕下的视觉线条整齐专业。
+
+### 2.2 流程体验
+- **视频预览阶段**：全屏自播放开场视频，配备点击进入的仪式感遮罩。
+- **表单收集阶段**：原生流畅切换，支持姓名、电话的校验与选择寄语的闭环交互。
+
+---
+
+## 3. 技术架构
+### 3.1 前端 (Frontend)
+- **技术栈**：原生 HTML5 + CSS3 + Vanilla JavaScript。
+- **特点**：无外部依赖（Zero Dependency），加载极速。
+- **适配**：全平台移动端适配，完美解决 iOS/Android 视频全屏播放及表单遮挡问题。
+
+### 3.2 后端 (Backend)
+- **技术栈**：Node.js 原生逻辑（内置 `http`, `fs` 模块）。
+- **零依赖运行**：由于环境限制，后端完全去除了 Express 等第三方包，直接由 Node.js 内置模块驱动，部署成本极低。
+- **数据存储**：使用 `data/submissions.json` 文件持久化存储，无需配置额外的数据库软件。
+
+---
+
+## 4. 后台管理与数据导出
+项目内置了简易高效的统计与导出接口，无需登录复杂后台即可操作。
+
+### 4.1 数据汇总路径
+- **导出链接**：`http://[您的服务器地址]:8080/admin/export`
+- **功能描述**：直接下载最新汇总的 CSV 表格。
+
+### 4.2 导出规格说明
+- **文件格式**：标准的 CSV 文件（兼容 Microsoft Excel）。
+- **编码处理**：内置 **UTF-8 BOM** 编码，确保在中国区 Windows 系统及 Office 软件中直接打开时**中文无乱码**。
+- **包含字段**：姓名、电话、选中的寄语、提交的具体时间。
+
+---
+
+## 5. 部署与启动指南
+### 5.1 本地启动
+在项目根目录下执行：
+```bash
+node server.js
+```
+访问：`http://localhost:8080`
+
+### 5.2 线上部署
+1. 将项目代码上传至支持 Node.js 的服务器。
+2. 确保服务器防火墙已放行 **8080** 端口。
+3. 使用 `node server.js` 启动即可实现全线上的数据收集与导出。
+
+---
+
+## 6. 后期运营建议
+- **背景优化**：目前的 `Wishbg.png` 资源较大（约 19MB），建议正式上线前压缩至 1MB 以内以优化首屏速度。
+- **安全性**：目前的导出链接为公开状态，建议在正式运营前在 `server.js` 中加入简单的验证逻辑或 IP 白名单限制。
