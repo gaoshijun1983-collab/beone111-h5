@@ -32,8 +32,19 @@
 
       <div id="form-phase" class="phase hidden">
         <form id="wish-form">
-          <!-- Field 1: Name -->
-          <div class="input-group group-job">
+          <!-- Field 1: Department -->
+          <div class="input-group group-dept">
+            <div class="input-label"><span>部门</span></div>
+            <input
+              type="text"
+              id="userdept"
+              class="transparent-input field-userdept"
+              required
+            />
+          </div>
+
+          <!-- Field 2: Name -->
+          <div class="input-group group-name">
             <div class="input-label"><span>姓名</span></div>
             <input
               type="text"
@@ -43,8 +54,8 @@
             />
           </div>
 
-          <!-- Field 2: Phone -->
-          <div class="input-group group-name">
+          <!-- Field 3: Phone -->
+          <div class="input-group group-phone">
             <div class="input-label"><span>电话</span></div>
             <input
               type="tel"

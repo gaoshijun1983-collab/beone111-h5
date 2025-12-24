@@ -27,13 +27,13 @@ const server = http.createServer((req, res) => {
         req.on('data', chunk => { body += chunk.toString(); });
         req.on('end', () => {
             try {
-                const { name, phone, message } = JSON.parse(body || '{}');
-                if (!name || !phone || !message) {
+                const { dept, name, phone, message } = JSON.parse(body || '{}');
+                if (!dept || !name || !phone || !message) {
                     res.writeHead(400, { 'Content-Type': 'application/json' });
                     return res.end(JSON.stringify({ success: false, error: '信息不完整' }));
                 }
                 const data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
-                data.push({ name, phone, message, timestamp: new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' }) });
+                data.push({ dept, name, phone, message, timestamp: new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' }) });
                 fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ success: true }));
@@ -47,11 +47,11 @@ const server = http.createServer((req, res) => {
     else if (req.method === 'GET' && pathname === '/admin/export') {
         try {
             const data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
-            const headers = ['姓名', '电话', '寄语', '提交时间'];
+            const headers = ['部门', '姓名', '电话', '寄语', '提交时间'];
             const BOM = '\uFEFF';
             let csvContent = BOM + headers.join(',') + '\r\n';
             data.forEach(item => {
-                csvContent += `${item.name},${item.phone},"${item.message.replace(/"/g, '""')}",${item.timestamp}\r\n`;
+                csvContent += `${item.dept},${item.name},${item.phone},"${item.message.replace(/"/g, '""')}",${item.timestamp}\r\n`;
             });
             res.writeHead(200, {
                 'Content-Type': 'text/csv; charset=utf-8',

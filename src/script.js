@@ -43,11 +43,12 @@ document.addEventListener('DOMContentLoaded', () => {
     wishForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
+        const dept = document.getElementById('userdept').value.trim();
         const name = document.getElementById('username').value.trim();
         const phone = document.getElementById('userphone').value.trim();
         const message = selectedWishInput.value;
 
-        if (!name || !phone || !message) {
+        if (!dept || !name || !phone || !message) {
             alert('请填写完整信息并选择寄语');
             return;
         }
@@ -56,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch('/api/submit', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, phone, message })
+                body: JSON.stringify({ dept, name, phone, message })
             });
 
             const result = await response.json();

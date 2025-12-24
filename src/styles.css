@@ -142,11 +142,14 @@ body {
   pointer-events: auto;
 }
 
-.group-job {
-  top: 38%;
+.group-dept {
+  top: 35%;
 }
 .group-name {
-  top: 46%;
+  top: 42.5%;
+}
+.group-phone {
+  top: 50%;
 }
 
 .input-label {
@@ -170,7 +173,7 @@ body {
 /* Wish Buttons */
 .wish-buttons-container {
   position: absolute;
-  top: 54%;
+  top: 58%;
   left: 10%;
   width: 80%;
   display: flex;
